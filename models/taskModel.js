@@ -1,16 +1,13 @@
-let tasks = [];
+const mongoose = require('mongoose');
 
-module.exports = {
-  getAllTasks: () => tasks,
+// Définition du schéma de tâche
+const taskSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  completed: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now }
+});
 
-  addTask: (task) => {
-    const newTask = { id: Date.now(), title: task };
-    tasks.push(newTask);
-    return newTask;
-  },
+// Création du modèle
+const Task = mongoose.model('Task', taskSchema);
 
-  removeTask: (id) => {
-    tasks = tasks.filter(task => task.id !== id);
-    return tasks;
-  }
-};
+module.exports = Task;
